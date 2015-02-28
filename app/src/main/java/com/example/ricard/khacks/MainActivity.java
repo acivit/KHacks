@@ -49,6 +49,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), FlightActivity.class);
+                Hackathon clickedHackathon = hackathons.get(position);
+                intent.putExtra("name", clickedHackathon.getName());
+                intent.putExtra("location", clickedHackathon.getLocation());
+                intent.putExtra("date", "2015-03-28");
+                startActivity(intent);
             }
         });
     }
