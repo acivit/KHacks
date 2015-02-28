@@ -35,7 +35,7 @@ public class FlightsCustomAdapter extends ArrayAdapter {
 
         Flight flights = mFlights.get(position);
         prize.setText(flights.getPrice());
-        date.setText(flights.getDate());
+        date.setText(flights.getDepDate());
         company.setText(flights.getCompany());
 
         return rowView;
