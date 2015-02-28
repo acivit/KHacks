@@ -1,5 +1,6 @@
 package com.example.ricard.khacks;
 
+import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,12 +52,23 @@ public class MainActivity extends ActionBarActivity {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
+        httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+        httppost.setHeader("Accept", "application/json");
 
         try {
             // Add your data
-            List<NameValuePair>pairs = new ArrayList<NameValuePair>();
-            pairs.add(new BasicNameValuePair("key1", "value1"));
-            pairs.add(new BasicNameValuePair("key2", "value2"));
+            //List<NameValuePair>pairs = new ArrayList<NameValuePair>();
+            JSONObject pairs = new JSONObject();
+            pairs.put("");
+            pairs.put("apiKey", getString(R.string.apiKey));
+            pairs.put("country", "value2"));
+            pairs.put(new BasicNameValuePair("currency", "value3"));
+            pairs.put(new BasicNameValuePair("locale", "value4"));
+            pairs.put(new BasicNameValuePair("originplace", "value5"));
+            pairs.put(new BasicNameValuePair("destinationplace", "value6"));
+            pairs.put(new BasicNameValuePair("outbounddate", "value7"));
+            pairs.put(new BasicNameValuePair("adults", "value8"));
+
             httppost.setEntity(new UrlEncodedFormEntity(pairs));
 
             // Execute HTTP Post Request
