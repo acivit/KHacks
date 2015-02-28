@@ -3,6 +3,7 @@ package com.example.ricard.khacks;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -25,7 +26,7 @@ public class FlightActivity extends ActionBarActivity {
     private String destinationPlace;
     private String outboundPartialDate;
     private String inboundPartialDate;
-    private String apiKey = getString(R.string.apiKey);
+    private String apiKey;
     private String httpRequest;
 
     @Override
@@ -33,10 +34,10 @@ public class FlightActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mTextView = (TextView) findViewById(R.id.title);
-
-
         mListView = (ListView) findViewById(R.id.listFlights);
+        apiKey = getString(R.string.apiKey);
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
         /*"name", clickedHackathon.getName());
