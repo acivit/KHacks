@@ -15,9 +15,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -59,17 +62,16 @@ public class MainActivity extends ActionBarActivity {
             // Add your data
             //List<NameValuePair>pairs = new ArrayList<NameValuePair>();
             JSONObject pairs = new JSONObject();
-            pairs.put("");
             pairs.put("apiKey", getString(R.string.apiKey));
-            pairs.put("country", "value2"));
-            pairs.put(new BasicNameValuePair("currency", "value3"));
-            pairs.put(new BasicNameValuePair("locale", "value4"));
-            pairs.put(new BasicNameValuePair("originplace", "value5"));
-            pairs.put(new BasicNameValuePair("destinationplace", "value6"));
-            pairs.put(new BasicNameValuePair("outbounddate", "value7"));
-            pairs.put(new BasicNameValuePair("adults", "value8"));
+            pairs.put("country", "value2");
+            pairs.put("currency", "value3");
+            pairs.put("locale", "value4");
+            pairs.put("originplace", "value5");
+            pairs.put("destinationplace", "value6");
+            pairs.put("outbounddate", "value7");
+            pairs.put("adults", "value8");
 
-            httppost.setEntity(new UrlEncodedFormEntity(pairs));
+            httppost.setEntity(new StringEntity(pairs.toString(), "UTF-8"));
 
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);
@@ -78,6 +80,8 @@ public class MainActivity extends ActionBarActivity {
             // TODO Auto-generated catch block
         } catch (IOException e) {
             // TODO Auto-generated catch block
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
