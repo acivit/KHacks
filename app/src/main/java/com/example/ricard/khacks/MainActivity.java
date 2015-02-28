@@ -163,6 +163,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(List<Hackathon> hackzList) {
             super.onPostExecute(hackzList);
+            hackathons.remove(0);
             adapter.addAll(hackzList);
         }
     }
