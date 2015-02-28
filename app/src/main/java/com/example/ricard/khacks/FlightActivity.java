@@ -1,5 +1,6 @@
 package com.example.ricard.khacks;
 
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,10 +20,18 @@ public class FlightActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         mListView = (ListView) findViewById(R.id.listFlights);
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
+
+        Bundle extras = getIntent().getExtras();
+        Flight test = new Flight(extras.getString("name"),"2000",extras.getString("date"),extras.getString("location") + " epicAVIO");
+        flights.add(test);
+
     }
 
 
@@ -44,6 +53,11 @@ public class FlightActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
