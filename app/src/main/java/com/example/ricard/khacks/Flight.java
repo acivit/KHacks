@@ -1,14 +1,14 @@
 package com.example.ricard.khacks;
 
-public class FlightsObject {
+public class Flight {
     private String name;
     private String prize;
     private String date;
     private String company;
 
-    public FlightsObject() {}
+    public Flight() {}
 
-    public FlightsObject(String name, String prize, String date, String company) {
+    public Flight(String name, String prize, String date, String company) {
         this.name = name;
         this.prize = prize;
         this.date = date;

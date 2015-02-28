@@ -5,21 +5,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 
 
-public class Flights extends ActionBarActivity {
+public class FlightActivity extends ActionBarActivity {
 
     private ListView mListView;
     private FlightsCustomAdapter adapter;
-    private ArrayList<FlightsObject> flights = new ArrayList<>();
+    private ArrayList<Flight> flights = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flights);
+        setContentView(R.layout.activity_flight);
 
         mListView = (ListView) findViewById(R.id.listFlights);
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);

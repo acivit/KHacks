@@ -10,11 +10,11 @@ import android.widget.TextView;
 import java.util.List;
 
 public class FlightsCustomAdapter extends ArrayAdapter {
-    private List<FlightsObject> mFlights;
+    private List<Flight> mFlights;
     private Context mContext;
     private int mResource;
 
-    public FlightsCustomAdapter(Context context, List<FlightsObject> data) {
+    public FlightsCustomAdapter(Context context, List<Flight> data) {
         super(context, R.layout.custom_flights, data);
         mContext = context;
         mFlights = data;
@@ -33,7 +33,7 @@ public class FlightsCustomAdapter extends ArrayAdapter {
         TextView date =  (TextView) rowView.findViewById(R.id.date);
         TextView company =  (TextView) rowView.findViewById(R.id.company);
 
-        FlightsObject flights = mFlights.get(position);
+        Flight flights = mFlights.get(position);
         name.setText(flights.getName());
         prize.setText(flights.getPrize());
         date.setText(flights.getDate());
