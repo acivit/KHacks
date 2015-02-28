@@ -2,15 +2,15 @@ package com.example.ricard.khacks;
 
 public class Flight {
     private String name;
-    private String prize;
+    private String price;
     private String date;
     private String company;
 
     public Flight() {}
 
-    public Flight(String name, String prize, String date, String company) {
+    public Flight(String name, String price, String date, String company) {
         this.name = name;
-        this.prize = prize;
+        this.price = price;
         this.date = date;
         this.company = company;
     }
@@ -23,12 +23,12 @@ public class Flight {
         this.name = name;
     }
 
-    public String getPrize() {
-        return prize;
+    public String getPrice() {
+        return price;
     }
 
-    public void setPrize(String prize) {
-        this.prize = prize;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getDate() {

@@ -22,12 +22,16 @@ public class FlightActivity extends ActionBarActivity {
         setContentView(R.layout.activity_flight);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Flight test = new Flight("37a3","2000","12/3/1995","Royal UPC airs");
-        flights.add(test);
+
 
         mListView = (ListView) findViewById(R.id.listFlights);
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
+
+        Bundle extras = getIntent().getExtras();
+        Flight test = new Flight(extras.getString("name"),"2000",extras.getString("date"),extras.getString("location") + " epicAVIO");
+        flights.add(test);
+
     }
 
 
