@@ -1,5 +1,6 @@
 package com.example.ricard.khacks;
 
+import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,7 +10,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.protocol.HTTP;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FlightActivity extends ActionBarActivity {
@@ -85,5 +91,20 @@ public class FlightActivity extends ActionBarActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class FlightTask extends AsyncTask<Void, Void, HttpResponse> {
+
+        @Override
+        protected HttpResponse doInBackground(Void... params) {
+            HttpResponse result;
+
+            HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
+            httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+            httppost.setHeader("Accept", "application/json");
+
+
+            return result;
+        }
     }
 }
