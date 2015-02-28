@@ -102,7 +102,7 @@ public class FlightActivity extends ActionBarActivity {
             HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
             httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
             httppost.setHeader("Accept", "application/json");
-
+            //
 
             return result;
         }
