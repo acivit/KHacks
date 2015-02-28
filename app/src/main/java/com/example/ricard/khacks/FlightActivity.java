@@ -11,11 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
-<<<<<<< HEAD
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.protocol.HTTP;
 
-=======
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -29,7 +27,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
->>>>>>> origin/master
 import java.util.ArrayList;
 import java.util.List;
 
