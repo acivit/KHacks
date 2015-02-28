@@ -34,14 +34,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<Hackathon> hackathons = new ArrayList<>();
     private MyCustomAdapter adapter;
 
-    private String market;
-    private String currency;
-    private String locale;
-    private String originPlace;
-    private String destinationPlace;
-    private String outboundPartialDate;
-    private String inboundPartialDate;
-    private String apiKey = getString(R.string.apiKey);
+
 
 
     @Override
