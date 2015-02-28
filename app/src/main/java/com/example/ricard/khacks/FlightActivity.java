@@ -29,6 +29,8 @@ public class FlightActivity extends ActionBarActivity {
     private String apiKey;
     private String httpRequest;
 
+    //http://partners.api.skyscanner.net/apiservices/pricing/v1.0/3088a4dcc54c4e9aaa51e88c4f2264ad_ecilpojl_0DE6F86506FD53306370A7DB75D2C3F6?apikey=ilw18275648197427228911861507832
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,11 @@ public class FlightActivity extends ActionBarActivity {
 
         mTextView = (TextView) findViewById(R.id.title);
         mListView = (ListView) findViewById(R.id.listFlights);
+
         apiKey = getString(R.string.apiKey);
+        httpRequest = "http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/"+market+"/"+currency+"/"
+                +locale+"/"+originPlace+"/"+destinationPlace+"/"+outboundPartialDate+"/"+inboundPartialDate+"?apiKey="+apiKey;
+
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
         /*"name", clickedHackathon.getName());
