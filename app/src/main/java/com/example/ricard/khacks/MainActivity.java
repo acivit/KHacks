@@ -4,6 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,6 +23,27 @@ import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private ListView mListView;
+    private ArrayList<Hackathon> hackathons = new ArrayList<>();
+    private MyCustomAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mListView = (ListView) findViewById(R.id.listView);
+        adapter = new MyCustomAdapter(getApplicationContext(), hackathons);
+
+        fetchData();
+        mListView.setAdapter(adapter);
+    }
+
+    void fetchData() {
+        adapter.add(new Hackathon("Kairos Hacks", "Barcelona, Spain", "28/02/2015"));
+        adapter.add(new Hackathon("FIBHACK", "Barcelona, Spain", "18/04/2015"));
+    }
 
     public void postData() {
         // Create a new HttpClient and Post Header
@@ -42,13 +66,6 @@ public class MainActivity extends ActionBarActivity {
             // TODO Auto-generated catch block
         }
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
