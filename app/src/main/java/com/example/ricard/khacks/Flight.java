@@ -1,26 +1,54 @@
 package com.example.ricard.khacks;
 
 public class Flight {
-    private String name;
+    private String depLoc;
+    private String arrLoc;
     private String price;
-    private String date;
+    private String depDate;
+    private String arrDate;
     private String company;
 
     public Flight() {}
 
-    public Flight(String name, String price, String date, String company) {
-        this.name = name;
+    public Flight(String depLoc, String arrLoc, String price, String depDate, String arrDate, String company) {
+        this.depLoc = depLoc;
+        this.arrLoc = arrLoc;
         this.price = price;
-        this.date = date;
+        this.depDate = depDate;
+        this.arrDate = arrDate;
         this.company = company;
     }
 
-    public String getName() {
-        return name;
+    public String getDepLoc() {
+        return depLoc;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDepLoc(String depLoc) {
+        this.depLoc = depLoc;
+    }
+
+    public String getArrLoc() {
+        return arrLoc;
+    }
+
+    public void setArrLoc(String arrLoc) {
+        this.arrLoc = arrLoc;
+    }
+
+    public String getDepDate() {
+        return depDate;
+    }
+
+    public void setDepDate(String depDate) {
+        this.depDate = depDate;
+    }
+
+    public String getArrDate() {
+        return arrDate;
+    }
+
+    public void setArrDate(String arrDate) {
+        this.arrDate = arrDate;
     }
 
     public String getPrice() {
@@ -29,14 +57,6 @@ public class Flight {
 
     public void setPrice(String price) {
         this.price = price;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getCompany() {

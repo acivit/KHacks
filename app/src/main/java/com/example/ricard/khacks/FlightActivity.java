@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -15,13 +16,14 @@ public class FlightActivity extends ActionBarActivity {
     private ListView mListView;
     private FlightsCustomAdapter adapter;
     private ArrayList<Flight> flights = new ArrayList<>();
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        mTextView = (TextView) findViewById(R.id.title);
 
 
         mListView = (ListView) findViewById(R.id.listFlights);
@@ -29,7 +31,8 @@ public class FlightActivity extends ActionBarActivity {
         mListView.setAdapter(adapter);
 
         Bundle extras = getIntent().getExtras();
-        Flight test = new Flight(extras.getString("name"),"2000",extras.getString("date"),extras.getString("location") + " epicAVIO");
+        mTextView.setText(extras.getString("name"));
+        Flight test = new Flight("2000",extras.getString("date"),extras.getString("location") + " epicAVIO");
         flights.add(test);
 
     }

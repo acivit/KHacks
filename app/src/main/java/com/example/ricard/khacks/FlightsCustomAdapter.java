@@ -34,7 +34,6 @@ public class FlightsCustomAdapter extends ArrayAdapter {
         TextView company =  (TextView) rowView.findViewById(R.id.company);
 
         Flight flights = mFlights.get(position);
-        name.setText(flights.getName());
         prize.setText(flights.getPrice());
         date.setText(flights.getDate());
         company.setText(flights.getCompany());

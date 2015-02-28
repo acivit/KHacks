@@ -14,8 +14,8 @@
         android:layout_height="wrap_content">
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/name"
-            android:text="Flight name"
+            android:id="@+id/travel"
+            android:text="BCN - EDI"
             android:paddingLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
