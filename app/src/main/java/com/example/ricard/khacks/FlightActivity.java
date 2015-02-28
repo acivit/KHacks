@@ -32,9 +32,8 @@ public class FlightActivity extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         mTextView.setText(extras.getString("name"));
-        Flight test = new Flight("2000",extras.getString("date"),extras.getString("location") + " epicAVIO");
+        Flight test = new Flight("BCN", "EDI", null, extras.getString("date"), extras.getString("date"), null);
         flights.add(test);
-
     }
 
 

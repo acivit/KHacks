@@ -10,12 +10,12 @@ public class Flight {
 
     public Flight() {}
 
-    public Flight(String depLoc, String arrLoc, String price, String depDate, String arrDate, String company) {
+    public Flight(String depLoc, String arrLoc, String price, String depDate, String retDate, String company) {
         this.depLoc = depLoc;
         this.arrLoc = arrLoc;
         this.price = price;
         this.depDate = depDate;
-        this.arrDate = arrDate;
+        this.arrDate = retDate;
         this.company = company;
     }
 
