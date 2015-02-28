@@ -42,9 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
              />
-
     </LinearLayout>
-
 
     <ImageView
         android:src="@mipmap/ic_launcher"
