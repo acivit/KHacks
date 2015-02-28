@@ -20,7 +20,12 @@
 
         <activity
             android:name=".FlightActivity"
-            android:label="FlightActivity"></activity>
+            android:label="FlightActivity">
+            android:parentActivityName=".MainActivity"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ricard.khacks.MainActivity" />
+            </activity>
 
     </application>
 
