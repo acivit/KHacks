@@ -18,6 +18,16 @@ public class FlightActivity extends ActionBarActivity {
     private ArrayList<Flight> flights = new ArrayList<>();
     private TextView mTextView;
 
+    private String market;
+    private String currency;
+    private String locale;
+    private String originPlace;
+    private String destinationPlace;
+    private String outboundPartialDate;
+    private String inboundPartialDate;
+    private String apiKey = getString(R.string.apiKey);
+    private String httpRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
