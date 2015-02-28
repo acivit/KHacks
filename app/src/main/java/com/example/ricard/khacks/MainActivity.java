@@ -47,8 +47,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     void fetchData() {
-        adapter.add(new Hackathon("Kairos Hacks", "Barcelona, Spain", "28/02/2015"));
-        adapter.add(new Hackathon("FIBHACK", "Barcelona, Spain", "18/04/2015"));
+        adapter.add(new Hackathon("Kairos Hacks", "Barcelona, Spain", "28/02/2015", null));
+        adapter.add(new Hackathon("FIBHACK", "Barcelona, Spain", "18/04/2015", null));
     }
 
     public void postData() {
