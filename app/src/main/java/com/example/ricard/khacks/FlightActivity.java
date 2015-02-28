@@ -29,9 +29,14 @@ public class FlightActivity extends ActionBarActivity {
         mListView = (ListView) findViewById(R.id.listFlights);
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
-
+        /*"name", clickedHackathon.getName());
+                intent.putExtra("location", clickedHackathon.getLocation());
+                intent.putExtra("date", "2015-03-28");
+                */
         Bundle extras = getIntent().getExtras();
         mTextView.setText(extras.getString("name"));
+        Flight flight = new Flight();
+        //flight.set
         Flight test = new Flight("BCN", "EDI", null, extras.getString("date"), extras.getString("date"), null);
         flights.add(test);
     }
