@@ -27,6 +27,7 @@ public class FlightActivity extends ActionBarActivity {
     private String outbounddate;
     private String adults;
     private String groupPricing;
+    private String LOCATIONSCHEMA;
     private String apiKey;
     private String httpRequest;
 
