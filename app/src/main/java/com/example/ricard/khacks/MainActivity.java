@@ -56,8 +56,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     void fetchData() {
-        adapter.add(new Hackathon("Kairos Hacks", "Barcelona, Spain", "28/02/2015", null));
-        adapter.add(new Hackathon("FIBHACK", "Barcelona, Spain", "18/04/2015", null));
+        adapter.add(new Hackathon("Loading next Hackathons....", null, null, null));
         HackTask task = new HackTask();
         task.execute();
     }
@@ -138,10 +137,11 @@ public class MainActivity extends ActionBarActivity {
                         Log.i("Event name", event.getName());
 
                         // img
-                        Elements img = thing.select("div.event-logo");
-                        if (img.size() == 1) {
-                            Log.i("Debugging", img.first().attr("src"));
-                            URL url = new URL(img.first().attr("src"));
+                        Elements img = thing.select("img");
+                        Log.i("Img size: ", img.size()+"");
+                        if (img.size() == 2) {
+                            Log.i("Debugging", img.last().attr("src"));
+                            URL url = new URL(img.last().attr("src"));
                             Log.i("Debugging", "2estic aqui");
                             Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                             event.setImage(bitmap);
@@ -149,6 +149,8 @@ public class MainActivity extends ActionBarActivity {
                         }
                         Log.i("Debugging", "3estic aqui");
                         Elements p = thing.select("p");
+                        event.setDate(p.first().text());
+                        event.setLocation(p.last().text());
                         Log.i("Event p", p.first().text() + "huehue " + p.last().text());
                         result.add(event);
                     }

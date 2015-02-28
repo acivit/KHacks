@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -34,11 +35,13 @@ public class MyCustomAdapter extends ArrayAdapter {
         TextView name =  (TextView) rowView.findViewById(R.id.name);
         TextView location =  (TextView) rowView.findViewById(R.id.location);
         TextView date =  (TextView) rowView.findViewById(R.id.date);
+        ImageView img = (ImageView) rowView.findViewById(R.id.image);
 
         Hackathon hackathon = mHackathons.get(position);
         name.setText(hackathon.getName());
         location.setText(hackathon.getLocation());
         date.setText(hackathon.getDate());
+        img.setImageBitmap(hackathon.getImage());
 
         return rowView;
     }
