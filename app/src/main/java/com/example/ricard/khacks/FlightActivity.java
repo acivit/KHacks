@@ -34,7 +34,6 @@ public class FlightActivity extends ActionBarActivity {
         mTextView.setText(extras.getString("name"));
         Flight test = new Flight("BCN", "EDI", null, extras.getString("date"), extras.getString("date"), null);
         flights.add(test);
-
     }
 
 
