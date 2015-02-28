@@ -19,13 +19,14 @@ public class FlightActivity extends ActionBarActivity {
     private ArrayList<Flight> flights = new ArrayList<>();
     private TextView mTextView;
 
-    private String market;
     private String currency;
+    private String country;
     private String locale;
-    private String originPlace;
-    private String destinationPlace;
-    private String outboundPartialDate;
-    private String inboundPartialDate;
+    private String originplace;
+    private String destinationplace;
+    private String outbounddate;
+    private String adults;
+    private String groupPricing;
     private String apiKey;
     private String httpRequest;
 
@@ -41,8 +42,7 @@ public class FlightActivity extends ActionBarActivity {
         mListView = (ListView) findViewById(R.id.listFlights);
 
         apiKey = getString(R.string.apiKey);
-        httpRequest = "http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/"+market+"/"+currency+"/"
-                +locale+"/"+originPlace+"/"+destinationPlace+"/"+outboundPartialDate+"/"+inboundPartialDate+"?apiKey="+apiKey;
+        httpRequest = "http://partners.api.skyscanner.net/apiservices/pricing/v1.0";
 
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
