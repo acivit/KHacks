@@ -19,6 +19,10 @@ public class FlightActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Flight test = new Flight("37a3","2000","12/3/1995","Royal UPC airs");
+        flights.add(test);
 
         mListView = (ListView) findViewById(R.id.listFlights);
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
