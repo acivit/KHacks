@@ -1,8 +1,12 @@
 package com.example.ricard.khacks;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -22,8 +26,13 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +58,8 @@ public class MainActivity extends ActionBarActivity {
     void fetchData() {
         adapter.add(new Hackathon("Kairos Hacks", "Barcelona, Spain", "28/02/2015", null));
         adapter.add(new Hackathon("FIBHACK", "Barcelona, Spain", "18/04/2015", null));
+        HackTask task = new HackTask();
+        task.execute();
     }
 
     public void postData() {
@@ -58,9 +69,10 @@ public class MainActivity extends ActionBarActivity {
         httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
         httppost.setHeader("Accept", "application/json");
 
-        try {
+        /*try {
             // Add your data
             //List<NameValuePair>pairs = new ArrayList<NameValuePair>();
+
             JSONObject pairs = new JSONObject();
             pairs.put("apiKey", getString(R.string.apiKey));
             pairs.put("country", "value2");
@@ -82,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
             // TODO Auto-generated catch block
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -105,5 +117,53 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class HackTask extends AsyncTask<Void, Void, List<Hackathon>> {
+
+        @Override
+        protected List<Hackathon> doInBackground(Void... params) {
+            List<Hackathon> result = new ArrayList<>();
+            try {
+                Document doc = Jsoup.connect("https://www.mlh.io/seasons/2015-eu/events").get();
+                Elements hackz = doc.select("div.event");
+                Log.i("Hackz size", "SIZE: " + hackz.size());
+
+                for (Element thing : hackz) {
+                    Hackathon event = new Hackathon();
+                    Elements nom = thing.select("h3");
+                    if (nom.size() == 1) {
+                        // title
+                        event.setName(nom.first().text());
+                        Log.i("Event name", event.getName());
+
+                        // img
+                        Elements img = thing.select("div.event-logo");
+                        if (img.size() == 1) {
+                            Log.i("Debugging", img.first().attr("src"));
+                            URL url = new URL(img.first().attr("src"));
+                            Log.i("Debugging", "2estic aqui");
+                            Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            event.setImage(bitmap);
+                            Log.i("Event img", "http:" + img.first().attr("src"));
+                        }
+                        Log.i("Debugging", "3estic aqui");
+                        Elements p = thing.select("p");
+                        Log.i("Event p", p.first().text() + "huehue " + p.last().text());
+                        result.add(event);
+                    }
+
+                }
+            } catch (IOException e) {
+                Log.wtf("HackTask", "Something went wrong");
+                cancel(true);
+            }
+            return result;
+        }
+        @Override
+        protected void onPostExecute(List<Hackathon> hackzList) {
+            super.onPostExecute(hackzList);
+            adapter.addAll(hackzList);
+        }
     }
 }
