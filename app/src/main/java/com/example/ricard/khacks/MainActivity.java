@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     void fetchData() {
-        adapter.add(new Hackathon("Loading next Hackathons....", null, null, null));
+        adapter.add(new Hackathon("Loading upcoming hackathons...", null, null, null));
         HackTask task = new HackTask();
         task.execute();
     }
@@ -130,33 +130,6 @@ public class MainActivity extends ActionBarActivity {
         HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
         httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
         httppost.setHeader("Accept", "application/json");
-
-        /*try {
-            // Add your data
-            //List<NameValuePair>pairs = new ArrayList<NameValuePair>();
-
-            JSONObject pairs = new JSONObject();
-            pairs.put("apiKey", getString(R.string.apiKey));
-            pairs.put("country", "value2");
-            pairs.put("currency", "value3");
-            pairs.put("locale", "value4");
-            pairs.put("originplace", "value5");
-            pairs.put("destinationplace", "value6");
-            pairs.put("outbounddate", "value7");
-            pairs.put("adults", "value8");
-
-            httppost.setEntity(new StringEntity(pairs.toString(), "UTF-8"));
-
-            // Execute HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
     }
 
     @Override

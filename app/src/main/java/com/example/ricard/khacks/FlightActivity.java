@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,6 +55,7 @@ public class FlightActivity extends ActionBarActivity {
     private FlightsCustomAdapter adapter;
     private ArrayList<Flight> flights = new ArrayList<>();
     private TextView mTextView;
+    private ImageButton skyButton;
 
     private String KEY_CURRENCY = "currency";
     private String KEY_COUNTRY = "country";
@@ -91,9 +93,6 @@ public class FlightActivity extends ActionBarActivity {
     String DeeplinkUrl;
     Map<String, String> keyToCompany;
 
-
-    //http://partners.api.skyscanner.net/apiservices/pricing/v1.0/3088a4dcc54c4e9aaa51e88c4f2264ad_ecilpojl_0DE6F86506FD53306370A7DB75D2C3F6?apikey=ilw18275648197427228911861507832
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +101,7 @@ public class FlightActivity extends ActionBarActivity {
 
         mTextView = (TextView) findViewById(R.id.title);
         mListView = (ListView) findViewById(R.id.listFlights);
+        skyButton = (ImageButton) findViewById(R.id.sky);
 
         apiKey = getString(R.string.apiKey);
         httpRequest = "http://partners.api.skyscanner.net/apiservices/pricing/v1.0";
@@ -146,7 +146,24 @@ public class FlightActivity extends ActionBarActivity {
             }
         });
 
-
+        skyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://www.skyscanner.net/";
+                try {
+                    Intent i = new Intent("android.intent.action.MAIN");
+                    i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+                    i.addCategory("android.intent.category.LAUNCHER");
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
+                catch(ActivityNotFoundException e) {
+                    // Chrome is not installed
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(i);
+                }
+            }
+        });
     }
 
 
@@ -188,7 +205,7 @@ public class FlightActivity extends ActionBarActivity {
 
         @Override
         protected List<Flight> doInBackground(Void... params) {
-            adapter.add(new Flight("Loading next Flights....", "", null, null, null, null, null));
+            adapter.add(new Flight("Loading cheapest flights...", "", null, null, null, null, null));
             getPlace();
             try {
                 Thread.sleep(500);
@@ -203,15 +220,11 @@ public class FlightActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
             List<Flight> list = getResults(location);
-
-
-
-
             return list;
         }
 
         private void getPlace() {
-            String url = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/EUR/en-GB?query="+destinationplace+"&apiKey=ilw18275648197427228911861507832";
+            String url = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/EUR/en-GB?query="+destinationplace+"&apiKey="+apiKey;
             HttpClient client = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(url);
             HttpResponse response = null;
@@ -301,9 +314,9 @@ public class FlightActivity extends ActionBarActivity {
                     arrival = arrival.substring(0,10)+' '+arrival.substring(11);
                     DeeplinkUrl = temp1.getJSONArray("Itineraries").getJSONObject(i).getJSONArray("PricingOptions").getJSONObject(0).get("DeeplinkUrl").toString();
                     flight.setCompany(companyia_final);
-                    flight.setPrice(preu);
-                    flight.setDepDate(departure);
-                    flight.setArrDate(arrival);
+                    flight.setPrice(preu+ " €");
+                    flight.setDepDate("Departure: " + departure);
+                    flight.setArrDate("Arrival: " + arrival);
                     flight.setUrl(DeeplinkUrl);
                     result.add(flight);
                 }
