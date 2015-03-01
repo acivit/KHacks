@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
                 Hackathon clickedHackathon = hackathons.get(position);
                 intent.putExtra("name", clickedHackathon.getName());
                 intent.putExtra("location", clickedHackathon.getLocation());
-                intent.putExtra("date", "2015-03-28");
+                intent.putExtra("date", clickedHackathon.getDate());
                 startActivity(intent);
             }
         });
