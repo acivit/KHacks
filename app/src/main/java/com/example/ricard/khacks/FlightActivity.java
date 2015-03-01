@@ -67,8 +67,6 @@ public class FlightActivity extends ActionBarActivity {
     private String KEY_APIKEY = "apiKey";
     private String KEY_GROUPPRICING = "groupPricing";
 
-    private int MAX_FLIGHTS = 5;
-
 
     private String currency = "EUR";
     private String country = "ES";
@@ -89,7 +87,6 @@ public class FlightActivity extends ActionBarActivity {
     String departure;
     String arrival;
     String DeeplinkUrl;
-
     Map<String, String> keyToCompany;
 
 
@@ -117,15 +114,15 @@ public class FlightActivity extends ActionBarActivity {
         flight.setArrLoc(extras.getString("location"));
         Log.i("hi et psso aquesta data", extras.getString("date"));
         flight.setDates(extras.getString("date"));
-
-        destinationplace = extras.getString("location");
         outbounddate = flight.getDepDate();
         inbounddate = flight.getArrDate();
+        destinationplace = flight.getArrLoc();
+
 
         iniSession();
 
 
-        
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -146,8 +143,8 @@ public class FlightActivity extends ActionBarActivity {
                 }
             }
         });
-        
-       
+
+
     }
 
     private void iniSession() {
@@ -188,6 +185,12 @@ public class FlightActivity extends ActionBarActivity {
         @Override
         protected List<Flight> doInBackground(Void... params) {
             adapter.add(new Flight("Loading next Flights....", "", null, null, null, null, null));
+            getPlace();
+            try {
+                Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
             String location = new String();
             location = getSession();
             try {
@@ -203,6 +206,27 @@ public class FlightActivity extends ActionBarActivity {
             return list;
         }
 
+        private void getPlace() {
+            String url = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/EUR/en-GB?query="+destinationplace+"&apiKey=ilw18275648197427228911861507832";
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpget = new HttpGet(url);
+            HttpResponse response = null;
+
+            try {
+                response  = client.execute(httpget);
+                String json_string = EntityUtils.toString(response.getEntity());
+                //JSONArray temp1 = new JSONArray(json_string);
+                JSONObject temp1 = new JSONObject(json_string);
+                destinationplace = temp1.getJSONArray("Places").getJSONObject(0).get("PlaceId").toString();
+                Log.w("destino", destinationplace);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         private String getSession() {
             String res = new String();
             HttpClient client = new DefaultHttpClient();
@@ -214,7 +238,7 @@ public class FlightActivity extends ActionBarActivity {
             pairs.add(new BasicNameValuePair(KEY_CURRENCY, currency));
             pairs.add(new BasicNameValuePair(KEY_COUNTRY, country));
             pairs.add(new BasicNameValuePair(KEY_LOCALE, locale));
-            pairs.add(new BasicNameValuePair(KEY_ORIGINPLACE, originplace));
+            pairs.add(new BasicNameValuePair(KEY_ORIGINPLACE, "BCN-sky"));
             pairs.add(new BasicNameValuePair(KEY_DESTINATIONPLACE, destinationplace));
             pairs.add(new BasicNameValuePair(KEY_OUTBOUNDDATE, outbounddate));
             pairs.add(new BasicNameValuePair(KEY_INBOUNDDATE, inbounddate));
@@ -259,10 +283,9 @@ public class FlightActivity extends ActionBarActivity {
                     keyToCompany.put(key, value);
                 }
                 //Parsejant el JSON a la ListView
-                for (int i = 0; i < MAX_FLIGHTS; ++i) {
+                for (int i = 0; i < 5; ++i) {
                     Flight flight = new Flight();
                     flight.setDepLoc("BCN");
-                    Bundle extras = getIntent().getExtras();
                     //flight.setArrLoc("NYC");
                     preu = temp1.getJSONArray("Itineraries").getJSONObject(i).getJSONArray("PricingOptions").getJSONObject(0).get("Price").toString();
                     companyia_id = temp1.getJSONArray("Legs").getJSONObject(i).getJSONArray("Carriers").get(0).toString();
