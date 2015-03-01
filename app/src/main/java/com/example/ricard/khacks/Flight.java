@@ -8,6 +8,8 @@ import java.util.Calendar;
 public class Flight {
     private String depLoc;
     private String arrLoc;
+    private String depCountry;
+    private String arrCountry;
     private String price;
     private String depDate;
     private String arrDate;
@@ -27,6 +29,22 @@ public class Flight {
         this.arrDate = retDate;
         this.company = company;
         this.url = url;
+    }
+
+    public String getDepCountry() {
+        return depCountry;
+    }
+
+    public void setDepCountry(String depCountry) {
+        this.depCountry = depCountry;
+    }
+
+    public String getArrCountry() {
+        return arrCountry;
+    }
+
+    public void setArrCountry(String arrCountry) {
+        this.arrCountry = arrCountry;
     }
 
     public String getUrl() {
@@ -50,7 +68,19 @@ public class Flight {
     }
 
     public void setArrLoc(String arrLoc) {
-        this.arrLoc = arrLoc;
+        String part1, part2;
+        if (arrLoc.contains(", ")) {
+            String[] parts = arrLoc.split(", ");
+            part1 = parts[0];
+            part2 = parts[1];
+        } else {
+            throw new IllegalArgumentException("String " + arrLoc + " is a non-supported location format");
+        }
+        String[] parts = arrLoc.split(", ");
+        Log.i("num de parts: " , parts.length+"");
+        this.arrLoc = part1;
+        this.arrCountry = part2;
+        Log.i(this.arrLoc, this.arrCountry);
     }
 
     private int translateMonth(String text) {

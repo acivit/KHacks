@@ -262,7 +262,8 @@ public class FlightActivity extends ActionBarActivity {
                 for (int i = 0; i < MAX_FLIGHTS; ++i) {
                     Flight flight = new Flight();
                     flight.setDepLoc("BCN");
-                    flight.setArrLoc("NYC");
+                    Bundle extras = getIntent().getExtras();
+                    //flight.setArrLoc("NYC");
                     preu = temp1.getJSONArray("Itineraries").getJSONObject(i).getJSONArray("PricingOptions").getJSONObject(0).get("Price").toString();
                     companyia_id = temp1.getJSONArray("Legs").getJSONObject(i).getJSONArray("Carriers").get(0).toString();
                     companyia_final = keyToCompany.get(companyia_id);
