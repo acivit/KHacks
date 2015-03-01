@@ -67,6 +67,8 @@ public class FlightActivity extends ActionBarActivity {
     private String KEY_APIKEY = "apiKey";
     private String KEY_GROUPPRICING = "groupPricing";
 
+    private int MAX_FLIGHTS = 5;
+
 
     private String currency = "EUR";
     private String country = "ES";
@@ -229,7 +231,6 @@ public class FlightActivity extends ActionBarActivity {
 
         private String getSession() {
             String res = new String();
-            //
             HttpClient client = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(httpRequest);
             httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
@@ -284,9 +285,9 @@ public class FlightActivity extends ActionBarActivity {
                     keyToCompany.put(key, value);
                 }
                 //Parsejant el JSON a la ListView
-                for (int i = 0; i < 5; ++i) {
+                for (int i = 0; i < MAX_FLIGHTS; ++i) {
                     Flight flight = new Flight();
-                    flight.setDepLoc("BCN");
+                    //flight.setDepLoc("BCN");
                     //flight.setArrLoc("NYC");
                     preu = temp1.getJSONArray("Itineraries").getJSONObject(i).getJSONArray("PricingOptions").getJSONObject(0).get("Price").toString();
                     companyia_id = temp1.getJSONArray("Legs").getJSONObject(i).getJSONArray("Carriers").get(0).toString();
