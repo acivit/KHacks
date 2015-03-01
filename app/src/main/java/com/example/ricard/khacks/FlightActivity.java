@@ -171,8 +171,16 @@ public class FlightActivity extends ActionBarActivity {
         }
 
         private void getResults (String location) {
+            location += "?apikey=" + apiKey;
             HttpClient client = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(location);
+            try {
+                HttpResponse response  = client.execute(httpget);
+
+                Log.w("wut", response.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
