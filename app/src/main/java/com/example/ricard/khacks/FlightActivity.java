@@ -201,6 +201,7 @@ public class FlightActivity extends ActionBarActivity {
             pairs.add(new BasicNameValuePair(KEY_LOCATIONSCHEMA, LOCATIONSCHEMA));
             pairs.add(new BasicNameValuePair(KEY_APIKEY, apiKey));
 
+
             return result;
         }
     }
