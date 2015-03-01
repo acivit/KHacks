@@ -89,6 +89,7 @@ public class FlightActivity extends ActionBarActivity {
     String departure;
     String arrival;
     String DeeplinkUrl;
+
     Map<String, String> keyToCompany;
 
 
@@ -116,6 +117,10 @@ public class FlightActivity extends ActionBarActivity {
         flight.setArrLoc(extras.getString("location"));
         Log.i("hi et psso aquesta data", extras.getString("date"));
         flight.setDates(extras.getString("date"));
+
+        destinationplace = extras.getString("location");
+        outbounddate = flight.getDepDate();
+        inbounddate = flight.getArrDate();
 
         iniSession();
 
