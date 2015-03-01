@@ -38,6 +38,17 @@ public class FlightActivity extends ActionBarActivity {
     private ArrayList<Flight> flights = new ArrayList<>();
     private TextView mTextView;
 
+    private String KEY_CURRENCY = "currency";
+    private String KEY_COUNTRY = "country";
+    private String KEY_LOCALE = "locale";
+    private String KEY_ORIGINPLACE = "originplace";
+    private String KEY_DESTINATIONPLACE = "destinationplace";
+    private String KEY_OUTBOUNDDATE = "outbounddate";
+    private String KEY_ADULTS = "adults";
+    private String KEY_LOCATIONSCHEMA = "LOCATIONSCHEMA";
+    private String KEY_APIKEY = "apiKey";
+
+
     private String currency;
     private String country;
     private String locale;
@@ -46,7 +57,7 @@ public class FlightActivity extends ActionBarActivity {
     private String outbounddate;
     private String adults;
     private String groupPricing;
-    private String LOCATIONSCHEMA;
+    private String LOCATIONSCHEMA = "iata";
     private String apiKey;
     private String httpRequest;
 
@@ -179,6 +190,16 @@ public class FlightActivity extends ActionBarActivity {
             httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
             httppost.setHeader("Accept", "application/json");
 
+            List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+            pairs.add(new BasicNameValuePair(KEY_CURRENCY, currency));
+            pairs.add(new BasicNameValuePair(KEY_COUNTRY, country));
+            pairs.add(new BasicNameValuePair(KEY_LOCALE, locale));
+            pairs.add(new BasicNameValuePair(KEY_ORIGINPLACE, originplace));
+            pairs.add(new BasicNameValuePair(KEY_DESTINATIONPLACE, destinationplace));
+            pairs.add(new BasicNameValuePair(KEY_OUTBOUNDDATE, outbounddate));
+            pairs.add(new BasicNameValuePair(KEY_ADULTS, adults));
+            pairs.add(new BasicNameValuePair(KEY_LOCATIONSCHEMA, LOCATIONSCHEMA));
+            pairs.add(new BasicNameValuePair(KEY_APIKEY, apiKey));
 
             return result;
         }
