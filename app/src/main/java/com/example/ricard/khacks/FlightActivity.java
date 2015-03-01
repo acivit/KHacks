@@ -229,6 +229,7 @@ public class FlightActivity extends ActionBarActivity {
 
         private String getSession() {
             String res = new String();
+            //
             HttpClient client = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(httpRequest);
             httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
