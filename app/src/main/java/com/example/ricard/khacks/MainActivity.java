@@ -28,7 +28,9 @@ import org.jsoup.select.Elements;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -213,6 +215,13 @@ public class MainActivity extends ActionBarActivity {
                         event.setDate(p.first().text());
                         event.setLocation(p.last().text());
                         Log.i("Event p", p.first().text() + "huehue " + p.last().text());
+                        String date = event.getDate();
+                        //date.su
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String s = sdf.format(c.getTime());
+                        Log.wtf("time", s);
                         result.add(event);
                     }
 
