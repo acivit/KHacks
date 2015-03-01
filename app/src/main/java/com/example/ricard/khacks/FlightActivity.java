@@ -81,11 +81,13 @@ public class FlightActivity extends ActionBarActivity {
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
         iniSession();
-        /*Bundle extras = getIntent().getExtras();
+
+        Bundle extras = getIntent().getExtras();
         mTextView.setText(extras.getString("name"));
         Flight flight = new Flight();
         flight.setDepLoc("BCN");
-        flight.setArrLoc(extras.getString("location"));*/
+        flight.setArrLoc(extras.getString("location"));
+        flight.setDepDate(extras.getString("date"));
 
     }
 
@@ -176,15 +178,19 @@ public class FlightActivity extends ActionBarActivity {
         }
 
         private void getResults (String location) {
+            HttpResponse response = null;
             location += "?apikey=" + apiKey;
             HttpClient client = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(location);
             try {
-                HttpResponse response  = client.execute(httpget);
-
+                response = client.execute(httpget);
                 Log.w("wut", response.toString());
+                Log.w("wut", response.getEntity().getContent().toString());
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            if (response != null) {
+                //Log.wtf("result", );
             }
         }
     }

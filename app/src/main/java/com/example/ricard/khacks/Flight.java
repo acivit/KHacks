@@ -40,7 +40,16 @@ public class Flight {
     }
 
     public void setDepDate(String depDate) {
-        this.depDate = depDate;
+        // February 28th - March 1st
+        this.depDate = translation(depDate);
+    }
+
+    private String translation(String ugly) {
+        // February 28th - March 1st
+        // March 7th - 8th
+        return null;
+
+
     }
 
     public String getArrDate() {
