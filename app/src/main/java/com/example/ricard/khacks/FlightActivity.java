@@ -87,6 +87,7 @@ public class FlightActivity extends ActionBarActivity {
         Flight flight = new Flight();
         flight.setDepLoc("BCN");
         flight.setArrLoc(extras.getString("location"));
+        Log.i("hi et psso aquesta data", extras.getString("date"));
         flight.setDates(extras.getString("date"));
 
     }

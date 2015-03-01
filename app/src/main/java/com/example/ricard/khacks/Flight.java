@@ -127,9 +127,9 @@ public class Flight {
         Log.wtf("day", day1);
         //out.set(2015, monthOfYear, dayOfMonth);
 
-        Log.i("HOLAPUTA",part2.charAt(part2.length()-1)+"");
+
         day2 = part2.charAt((part2.length()-4))+"" + part2.charAt((part2.length()-3))+"";
-        //if (day2.charAt(0) == ' ') day2 = day2.charAt(1)+"";
+        if (day2.charAt(0) == ' ') day2 = day2.charAt(1)+"";
         Log.wtf("dia2", day2);
 
         Calendar c1 = Calendar.getInstance();

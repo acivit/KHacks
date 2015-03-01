@@ -70,8 +70,8 @@ public class MainActivity extends ActionBarActivity {
                 for (int i = 0; i < size; ++i) {
                     Hackathon ext = new Hackathon();
                     ext.setName(mSettings.getString("hack" + Integer.toString(i) + "name", "not found"));
-                    ext.setDate(mSettings.getString("hack" + Integer.toString(i)+"location", "not found"));
-                    ext.setLocation(mSettings.getString("hack" + Integer.toString(i)+"date","not found"));
+                    ext.setDate(mSettings.getString("hack" + Integer.toString(i)+"date", "not found"));
+                    ext.setLocation(mSettings.getString("hack" + Integer.toString(i)+"location","not found"));
                     String imag = mSettings.getString("hack" + Integer.toString(i)+"Image","not found");
                     byte [] encodeByte=Base64.decode(imag,Base64.DEFAULT);
                     Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
@@ -212,7 +212,7 @@ public class MainActivity extends ActionBarActivity {
                         Elements p = thing.select("p");
                         event.setDate(p.first().text());
                         event.setLocation(p.last().text());
-                        //Log.i("Event p", p.first().text() + "huehue " + p.last().text());
+                        Log.i("Event p", p.first().text() + "huehue " + p.last().text());
                         result.add(event);
                     }
 
