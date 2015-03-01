@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.protocol.HTTP;
@@ -49,13 +50,13 @@ public class FlightActivity extends ActionBarActivity {
     private String KEY_APIKEY = "apiKey";
 
 
-    private String currency;
-    private String country;
-    private String locale;
-    private String originplace;
-    private String destinationplace;
-    private String outbounddate;
-    private String adults;
+    private String currency = "EUR";
+    private String country = "ES";
+    private String locale = "en-GB";
+    private String originplace = "EDI";
+    private String destinationplace = "LHR";
+    private String outbounddate = "2015-03-14";
+    private String adults = "1";
     private String groupPricing;
     private String LOCATIONSCHEMA = "iata";
     private String apiKey;
@@ -77,79 +78,18 @@ public class FlightActivity extends ActionBarActivity {
 
         adapter = new FlightsCustomAdapter(getApplicationContext(), flights);
         mListView.setAdapter(adapter);
-        /*"name", clickedHackathon.getName());
-                intent.putExtra("location", clickedHackathon.getLocation());
-                intent.putExtra("date", "2015-03-28");
-                */
-        Bundle extras = getIntent().getExtras();
+        iniSession();
+        /*Bundle extras = getIntent().getExtras();
         mTextView.setText(extras.getString("name"));
         Flight flight = new Flight();
         flight.setDepLoc("BCN");
-        flight.setArrLoc(extras.getString("location"));
-/*
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
-        httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
-        httppost.setHeader("Accept", "application/json");
+        flight.setArrLoc(extras.getString("location"));*/
 
-        try {
-            // Add your data
-            //List<NameValuePair>pairs = new ArrayList<NameValuePair>();
+    }
 
-            JSONObject pairs = new JSONObject();
-            pairs.put("apiKey", getString(R.string.apiKey));
-            pairs.put("country", "value2");
-            pairs.put("currency", "value3");
-            pairs.put("locale", "value4");
-            pairs.put("originplace", "value5");
-            pairs.put("destinationplace", "value6");
-            pairs.put("outbounddate", "value7");
-            pairs.put("adults", "value8");
-
-            httppost.setEntity(new StringEntity(pairs.toString(), "UTF-8"));
-
-            // Execute HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-
-        }*/
-
-        // Creating HTTP client
-        HttpClient httpClient = new DefaultHttpClient();
-        // Creating HTTP Post
-        HttpPost httpPost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
-
-        // Building post parameters
-        // key and value pair
-        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
-        nameValuePair.add(new BasicNameValuePair("Content-Type", "application/x-www-form-urlencoded"));
-        nameValuePair.add(new BasicNameValuePair("Accept", "application/json"));
-/*
-        // Url Encoding the POST parameters
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-        } catch (UnsupportedEncodingException e) {
-            // writing error to Log
-            e.printStackTrace();
-        }
-
-        // Making HTTP Request
-        try {
-            HttpResponse response = httpClient.execute(httpPost);
-
-            // writing response to log
-            Log.d("Http Response:", response.toString());
-        } catch (ClientProtocolException e) {
-            // writing exception to log
-            e.printStackTrace();
-        } catch (IOException e) {
-            // writing exception to log
-            e.printStackTrace();
-
-        }
-*/
-        Flight test = new Flight("BCN", "EDI", null, extras.getString("date"), extras.getString("date"), null);
-        flights.add(test);
+    private void iniSession() {
+        FlightTask task = new FlightTask();
+        task.execute();
     }
 
 
@@ -180,13 +120,12 @@ public class FlightActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class FlightTask extends AsyncTask<Void, Void, HttpResponse> {
+    private class FlightTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected HttpResponse doInBackground(Void... params) {
-            HttpResponse result;
-
-            HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
+        protected Void doInBackground(Void... params) {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(httpRequest);
             httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
             httppost.setHeader("Accept", "application/json");
 
@@ -201,8 +140,21 @@ public class FlightActivity extends ActionBarActivity {
             pairs.add(new BasicNameValuePair(KEY_LOCATIONSCHEMA, LOCATIONSCHEMA));
             pairs.add(new BasicNameValuePair(KEY_APIKEY, apiKey));
 
+            try {
+                httppost.setEntity(new UrlEncodedFormEntity(pairs));
+                HttpResponse response  = client.execute(httppost);
+                Header[] h = response.getAllHeaders();
 
-            return result;
+                Log.wtf("header", h[4].toString());
+                //Log.w("works", s);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
         }
     }
 }
