@@ -40,38 +40,65 @@ public class Flight {
         this.arrLoc = arrLoc;
     }
 
-    private String translateMonth(String text) {
-        String res = null;
+    private int translateMonth(String text) {
+        int res = 0;
         switch (text) {
-            case "January": res =  "01";
-            case "February": res =  "02";
-            case "March": res = "03";
-            case "April": res = "04";
-            case "May": res = "05";
-            case "June": res = "06";
-            case "July": res = "07";
-            case "August": res = "08";
-            case "September": res = "09";
-            case "October": res = "10";
-            case "November": res = "11";
-            case "December": res = "12";
+            case "January":
+                res =  1;
+                break;
+            case "February":
+                res =  2;
+                break;
+            case "March":
+                res = 3;
+                break;
+            case "April":
+                res = 4;
+                break;
+            case "May":
+                res = 5;
+                break;
+            case "June":
+                res = 6;
+                break;
+            case "July":
+                res = 7;
+                break;
+            case "August":
+                res = 8;
+                break;
+            case "September":
+                res = 9;
+                break;
+            case "October":
+                res = 10;
+                break;
+            case "November":
+                res = 11;
+                break;
+            case "December":
+                res = 12;
+                break;
             default: break;
         }
         return res;
     }
 
-    public String setDates(String date) {
+    public void setDates(String date) {
         // February 28th - March 1st
         // March 7th - 8th
         Calendar out = null;
-        String month = "";
-        String day = "";
-        String part1; // 004
-        String part2; // 034556
+        String month1 = "";
+        int month2;
+        String day1 = "";
+        String day2 = "";
+        String part1;
+        String part2;
+
+        Log.wtf("hola", "don pepito");
 
         if (date.contains("-")) {
-            String string = "004-034556";
-            String[] parts = string.split("-");
+            String[] parts = date.split("-");
             part1 = parts[0];
             part2 = parts[1];
         } else {
@@ -80,24 +107,49 @@ public class Flight {
 
         int i;
         for (i = 0; i < part1.length(); i++) {
-            if (part1.charAt(i) == ' ') break;
+            if (part1.charAt(i) == ' ') {
+                i++;
+                break;
+            }
             else {
-                month += part1.charAt(i);
+                month1 += part1.charAt(i);
             }
         }
-        while(part1.charAt(i) >= '0' && part1.charAt(i) <= 9) {
-            day += part1.charAt(i);
+        Log.i("i", i+"");
+        while(i < part1.length() && part1.charAt(i) >= '0' && part1.charAt(i) <= '9') {
+            day1 += part1.charAt(i);
+            Log.i("char at i", part1.charAt(i)+"");
             ++i;
         }
-        month = translateMonth(month);
-        if (day.length() < 2) day = "0"+day;
-        Log.wtf("month", month);
-        Log.wtf("day", day);
+        int monthInt = translateMonth(month1);
+        if (part2.length() <= 5) month2 = monthInt;
+        else month2 = monthInt+1;
+        Log.wtf("day", day1);
         //out.set(2015, monthOfYear, dayOfMonth);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        //if not null fer :String formattedDate = sdf.format(out.getTime());
-        return month;
+        Log.i("HOLAPUTA",part2.charAt(part2.length()-1)+"");
+        day2 = part2.charAt((part2.length()-4))+"" + part2.charAt((part2.length()-3))+"";
+        //if (day2.charAt(0) == ' ') day2 = day2.charAt(1)+"";
+        Log.wtf("dia2", day2);
+
+        Calendar c1 = Calendar.getInstance();
+        c1.set(2015, monthInt-1, Integer.valueOf(day1));
+        c1.roll(Calendar.DAY_OF_MONTH, -1);
+
+        Log.wtf("month", monthInt+"");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate1 = sdf1.format(c1.getTime());
+
+        Calendar c2 = Calendar.getInstance();
+        c2.set(2015, month2-1, Integer.valueOf(day2));
+        c2.roll(Calendar.DAY_OF_MONTH, 1);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate2 = sdf2.format(c2.getTime());
+
+        Log.i("formated", formattedDate1);
+        Log.i("formated", formattedDate2);
+        setDepDate(formattedDate1);
+        setArrDate(formattedDate2);
     }
 
     public String getDepDate() {
