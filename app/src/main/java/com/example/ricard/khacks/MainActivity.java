@@ -218,11 +218,19 @@ public class MainActivity extends ActionBarActivity {
                         String date = event.getDate();
                         //date.su
                         Calendar c = Calendar.getInstance();
-                        c.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+                        int year = c.get(Calendar.YEAR);
+                        int month = c.get(Calendar.MONTH);
+                        int day = c.get(Calendar.DAY_OF_MONTH);
+                        c.set(year, month, day);
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        String s = sdf.format(c.getTime());
-                        Log.wtf("time", s);
-                        result.add(event);
+                        String today = sdf.format(c.getTime());
+                        Flight f = new Flight();
+                        f.setDates(date);
+                        String eventDate = f.getDepDate();
+                        if (today.compareTo(eventDate)<0){
+                            Log.wtf("time", today);
+                            result.add(event);
+                        }
                     }
 
                 }

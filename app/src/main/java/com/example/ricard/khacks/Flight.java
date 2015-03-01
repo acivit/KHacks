@@ -144,7 +144,9 @@ public class Flight {
             String[] parts = date.split("-");
             part1 = parts[0];
             part2 = parts[1];
+            Log.wtf("hola", "don jose");
         } else {
+            Log.wtf("hola", "don jose");
             throw new IllegalArgumentException("String " + date + " is a non-supported date format");
         }
 
