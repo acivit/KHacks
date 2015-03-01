@@ -124,6 +124,18 @@ public class FlightActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
+            String location = new String();
+            location = getSession();
+            getResults(location);
+
+
+
+
+            return null;
+        }
+
+        private String getSession() {
+            String res = new String();
             HttpClient client = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(httpRequest);
             httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
@@ -144,16 +156,19 @@ public class FlightActivity extends ActionBarActivity {
                 httppost.setEntity(new UrlEncodedFormEntity(pairs));
                 HttpResponse response  = client.execute(httppost);
                 Header[] h = response.getAllHeaders();
+                res = h[4].getValue();
 
-                Log.wtf("header", h[4].getValue().toString());
+                Log.wtf("header", h[4].getValue());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return res;
+        }
 
+        private void getResults (String location) {
 
-            return null;
         }
     }
 }
