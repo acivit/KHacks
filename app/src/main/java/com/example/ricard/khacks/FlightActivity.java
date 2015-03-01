@@ -173,13 +173,40 @@ public class FlightActivity extends ActionBarActivity {
 
         @Override
         protected HttpResponse doInBackground(Void... params) {
-            HttpResponse result;
+            HttpResponse result = null;
 
-            HttpPost httppost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
-            httppost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
-            httppost.setHeader("Accept", "application/json");
+            // Creating HTTP client
+            HttpClient httpClient = new DefaultHttpClient();
+            // Creating HTTP Post
+            HttpPost httpPost = new HttpPost("http://partners.api.skyscanner.net/apiservices/pricing/v1.0");
+            httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+            httpPost.setHeader("Accept", "application/json");
 
+            try {
+                // Building post parameters
+                // key and value pair
+                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+                nameValuePair.add(new BasicNameValuePair("country", "ES"));
+                nameValuePair.add(new BasicNameValuePair("Accept", "application/json"));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+            } catch (UnsupportedEncodingException e) {
+                // writing error to Log
+                e.printStackTrace();
+            }
 
+            // Making HTTP Request
+            try {
+                result = httpClient.execute(httpPost);
+                // writing response to log
+                Log.d("Http Response:", result.toString());
+            } catch (ClientProtocolException e) {
+                // writing exception to log
+                e.printStackTrace();
+            } catch (IOException e) {
+                // writing exception to log
+                e.printStackTrace();
+
+            }
             return result;
         }
     }
