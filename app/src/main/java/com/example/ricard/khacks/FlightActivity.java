@@ -189,7 +189,7 @@ public class FlightActivity extends ActionBarActivity {
             adapter.add(new Flight("Loading next Flights....", "", null, null, null, null, null));
             getPlace();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -287,7 +287,8 @@ public class FlightActivity extends ActionBarActivity {
                 //Parsejant el JSON a la ListView
                 for (int i = 0; i < MAX_FLIGHTS; ++i) {
                     Flight flight = new Flight();
-                    //flight.setDepLoc("BCN");
+                    String desti = destinationplace.substring(0,3);
+                    flight.setDepLoc("BCN - "+desti);
                     //flight.setArrLoc("NYC");
                     preu = temp1.getJSONArray("Itineraries").getJSONObject(i).getJSONArray("PricingOptions").getJSONObject(0).get("Price").toString();
                     companyia_id = temp1.getJSONArray("Legs").getJSONObject(i).getJSONArray("Carriers").get(0).toString();
