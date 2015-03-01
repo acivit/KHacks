@@ -98,6 +98,7 @@ public class FlightActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Fly to your hackathon");
 
         mTextView = (TextView) findViewById(R.id.title);
         mListView = (ListView) findViewById(R.id.listFlights);
