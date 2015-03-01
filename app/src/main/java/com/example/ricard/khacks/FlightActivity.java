@@ -67,6 +67,8 @@ public class FlightActivity extends ActionBarActivity {
     private String KEY_APIKEY = "apiKey";
     private String KEY_GROUPPRICING = "groupPricing";
 
+    private int MAX_FLIGHTS = 5;
+
 
     private String currency = "EUR";
     private String country = "ES";
@@ -252,7 +254,7 @@ public class FlightActivity extends ActionBarActivity {
                     keyToCompany.put(key, value);
                 }
                 //Parsejant el JSON a la ListView
-                for (int i = 0; i < 5; ++i) {
+                for (int i = 0; i < MAX_FLIGHTS; ++i) {
                     Flight flight = new Flight();
                     flight.setDepLoc("BCN");
                     flight.setArrLoc("NYC");
