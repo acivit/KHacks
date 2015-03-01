@@ -128,6 +128,11 @@ public class FlightActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params) {
             String location = new String();
             location = getSession();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             getResults(location);
 
 
