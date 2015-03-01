@@ -146,7 +146,6 @@ public class FlightActivity extends ActionBarActivity {
                 Header[] h = response.getAllHeaders();
 
                 Log.wtf("header", h[4].toString());
-                //Log.w("works", s);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (IOException e) {
