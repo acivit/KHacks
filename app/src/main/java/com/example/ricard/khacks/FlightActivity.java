@@ -1,5 +1,6 @@
 package com.example.ricard.khacks;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class FlightActivity extends ActionBarActivity {
         mTextView.setText(extras.getString("name"));
         Flight flight = new Flight();
         //flight.set
-        Flight test = new Flight("BCN", "EDI", null, extras.getString("date"), extras.getString("date"), null);
+        Flight test = new Flight("BCN", "EDI", "2000", extras.getString("date"), extras.getString("date"), "vueling");
         flights.add(test);
     }
 

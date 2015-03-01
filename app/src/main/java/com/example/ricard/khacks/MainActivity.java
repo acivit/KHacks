@@ -1,16 +1,19 @@
 package com.example.ricard.khacks;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.apache.http.client.HttpClient;
@@ -22,6 +25,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,17 +37,53 @@ public class MainActivity extends ActionBarActivity {
     private ListView mListView;
     private ArrayList<Hackathon> hackathons = new ArrayList<>();
     private MyCustomAdapter adapter;
+    SharedPreferences mSettings;
+    TinyDB tinydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tinydb = new TinyDB(this);
+        mSettings = this.getSharedPreferences("main", 0);
+        int value = mSettings.getInt("entrat", 0);
+        Log.d("value ============== ", Integer.toString(value));
         setContentView(R.layout.activity_main);
-
         mListView = (ListView) findViewById(R.id.listView);
         adapter = new MyCustomAdapter(getApplicationContext(), hackathons);
+        if (value == 0) {
+            fetchData();
+            mListView.setAdapter(adapter);
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putInt("entrat", 1);
+            editor.commit();
+            //save("hack",hackathons);
+        }
+        else {
+            ++value;
+            if (value == 5) value = 0;
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putInt("entrat", value);
+            editor.commit();
+            int size = mSettings.getInt("size",0);
+            if (size > 0) {
+                List<Hackathon> aux = new ArrayList<>();
+                for (int i = 0; i < size; ++i) {
+                    Hackathon ext = new Hackathon();
+                    ext.setName(mSettings.getString("hack" + Integer.toString(i) + "name", "not found"));
+                    ext.setDate(mSettings.getString("hack" + Integer.toString(i)+"location", "not found"));
+                    ext.setLocation(mSettings.getString("hack" + Integer.toString(i)+"date","not found"));
+                    String imag = mSettings.getString("hack" + Integer.toString(i)+"Image","not found");
+                    byte [] encodeByte=Base64.decode(imag,Base64.DEFAULT);
+                    Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                    ext.setImage(bitmap);
+                    aux.add(ext);
+                }
+                mListView.setAdapter(adapter);
+                adapter.addAll(aux);
+            }
 
-        fetchData();
-        mListView.setAdapter(adapter);
+        }
+
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,6 +96,24 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    void save(String key, List<Hackathon> marray) {
+        SharedPreferences.Editor editor = mSettings.edit();
+        int size = marray.size();
+        editor.putInt("size", size);
+        for (int i = 0; i < size;++i) {
+            editor.putString(key + Integer.toString(i)+"name", marray.get(i).getName());
+            editor.putString(key + Integer.toString(i)+"location", marray.get(i).getLocation());
+            editor.putString(key + Integer.toString(i)+"date", marray.get(i).getDate());
+            ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+            marray.get(i).getImage().compress(Bitmap.CompressFormat.PNG,100, baos);
+            byte [] b=baos.toByteArray();
+            String temp=Base64.encodeToString(b, Base64.DEFAULT);
+            editor.putString(key + Integer.toString(i)+"Image", temp);
+
+        }
+        editor.commit();
     }
 
     void fetchData() {
@@ -129,7 +187,7 @@ public class MainActivity extends ActionBarActivity {
             try {
                 Document doc = Jsoup.connect("https://www.mlh.io/seasons/2015-eu/events").get();
                 Elements hackz = doc.select("div.event");
-                Log.i("Hackz size", "SIZE: " + hackz.size());
+                //Log.i("Hackz size", "SIZE: " + hackz.size());
 
                 for (Element thing : hackz) {
                     Hackathon event = new Hackathon();
@@ -137,24 +195,24 @@ public class MainActivity extends ActionBarActivity {
                     if (nom.size() == 1) {
                         // title
                         event.setName(nom.first().text());
-                        Log.i("Event name", event.getName());
+                        //Log.i("Event name", event.getName());
 
                         // img
                         Elements img = thing.select("img");
-                        Log.i("Img size: ", img.size()+"");
+                        //Log.i("Img size: ", img.size()+"");
                         if (img.size() == 2) {
-                            Log.i("Debugging", img.last().attr("src"));
+                            //Log.i("Debugging", img.last().attr("src"));
                             URL url = new URL(img.last().attr("src"));
-                            Log.i("Debugging", "2estic aqui");
+                            //Log.i("Debugging", "2estic aqui");
                             Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                             event.setImage(bitmap);
-                            Log.i("Event img", "http:" + img.first().attr("src"));
+                            //Log.i("Event img", "http:" + img.first().attr("src"));
                         }
-                        Log.i("Debugging", "3estic aqui");
+                        //Log.i("Debugging", "3estic aqui");
                         Elements p = thing.select("p");
                         event.setDate(p.first().text());
                         event.setLocation(p.last().text());
-                        Log.i("Event p", p.first().text() + "huehue " + p.last().text());
+                        //Log.i("Event p", p.first().text() + "huehue " + p.last().text());
                         result.add(event);
                     }
 
@@ -163,6 +221,7 @@ public class MainActivity extends ActionBarActivity {
                 Log.wtf("HackTask", "Something went wrong");
                 cancel(true);
             }
+            save("hack",result);
             return result;
         }
         @Override
