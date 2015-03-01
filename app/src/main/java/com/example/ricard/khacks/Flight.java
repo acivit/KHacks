@@ -12,16 +12,29 @@ public class Flight {
     private String depDate;
     private String arrDate;
     private String company;
+    private String url;
 
     public Flight() {}
 
-    public Flight(String depLoc, String arrLoc, String price, String depDate, String retDate, String company) {
-        this.depLoc = depLoc;
+    public Flight(String depLoc, String arrLoc, String price, String depDate, String retDate, String company, String url) {
+        if (depLoc.equals("Loading next Flights....")) {
+            this.depLoc = depLoc;
+        }
+        else this.depLoc = depLoc + " - " + arrLoc;
         this.arrLoc = arrLoc;
         this.price = price;
         this.depDate = depDate;
         this.arrDate = retDate;
         this.company = company;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getDepLoc() {
