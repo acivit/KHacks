@@ -149,6 +149,8 @@ public class FlightActivity extends ActionBarActivity {
 
     }
 
+
+
     private void iniSession() {
         FlightTask task = new FlightTask();
         task.execute();

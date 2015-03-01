@@ -22,8 +22,39 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/listFlights"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.6"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.2"        >
+        <TextView
+            android:text="Powered by "
+            android:textSize="18dp"
+            android:textStyle="italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"/>
+        <ImageButton
+            android:id="@+id/sky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:minWidth="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ssLogo"
+            android:layout_weight="0.8"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView" />
 </LinearLayout>
