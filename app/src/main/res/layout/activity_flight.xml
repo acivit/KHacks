@@ -48,7 +48,7 @@
             android:minHeight="80dp"
             android:minWidth="80dp"
             android:layout_gravity="center"
-            android:src="@drawable/ssLogo"
+            android:src="@drawable/sslogo"
             android:layout_weight="0.8"/>
 
     </LinearLayout>
