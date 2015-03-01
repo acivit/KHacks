@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.protocol.HTTP;
 
@@ -48,6 +49,7 @@ public class FlightActivity extends ActionBarActivity {
     private String KEY_ADULTS = "adults";
     private String KEY_LOCATIONSCHEMA = "LOCATIONSCHEMA";
     private String KEY_APIKEY = "apiKey";
+    private String KEY_GROUPPRICING = "groupPricing";
 
 
     private String currency = "EUR";
@@ -57,7 +59,7 @@ public class FlightActivity extends ActionBarActivity {
     private String destinationplace = "LHR";
     private String outbounddate = "2015-03-14";
     private String adults = "1";
-    private String groupPricing;
+    private String groupPricing = "true";
     private String LOCATIONSCHEMA = "iata";
     private String apiKey;
     private String httpRequest;
@@ -150,6 +152,7 @@ public class FlightActivity extends ActionBarActivity {
             pairs.add(new BasicNameValuePair(KEY_OUTBOUNDDATE, outbounddate));
             pairs.add(new BasicNameValuePair(KEY_ADULTS, adults));
             pairs.add(new BasicNameValuePair(KEY_LOCATIONSCHEMA, LOCATIONSCHEMA));
+            pairs.add(new BasicNameValuePair(KEY_GROUPPRICING, groupPricing));
             pairs.add(new BasicNameValuePair(KEY_APIKEY, apiKey));
 
             try {
@@ -168,7 +171,8 @@ public class FlightActivity extends ActionBarActivity {
         }
 
         private void getResults (String location) {
-
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpget = new HttpGet(location);
         }
     }
 }
